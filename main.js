@@ -13,7 +13,7 @@ myImage.addEventListener("load", function () {
   // console.log(pixels);
 
   let particlesArray = [];
-  const numberOfParticles = 4000;
+  const numberOfParticles = 5000;
 
   let mappedImage = [];
 
@@ -44,33 +44,15 @@ myImage.addEventListener("load", function () {
       this.x = Math.random() * canvas.width;
       this.y = 0;
       this.speed = 0;
-      this.velocity = Math.random() * 0.6; //
-      this.size = Math.random() * 1.5 * Math.random() * 2 + 1;
+      this.velocity = Math.random() * 3.5; //
+      this.size = Math.random() * 1.5 + 1;
       this.position1 = Math.floor(this.y);
       this.position2 = Math.floor(this.x);
     }
-    // update() {
-    //   this.position1 = Math.floor(this.y);
-    //   this.position2 = Math.floor(this.x);
-    //   this.speed = mappedImage[this.position1][this.position2][0];
-    //   let movement = 2.5 - this.speed + this.velocity;
-
-    //   this.y += movement;
-    //   if (this.y >= canvas.height) {
-    //     this.y = 0;
-    //     this.x = Math.random() * canvas.width;
-    //   }
-    // }
     update() {
       this.position1 = Math.floor(this.y);
       this.position2 = Math.floor(this.x);
-
-      const minSpeed = 0.1; // Мінімальне значення швидкості
-      const maxSpeed = 3.5; // Максимальне значення швидкості
-
-      // Задаємо випадкову швидкість для кожної частинки
-      this.speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
-
+      this.speed = mappedImage[this.position1][this.position2][0];
       let movement = 2.5 - this.speed + this.velocity;
 
       this.y += movement;
@@ -108,7 +90,7 @@ myImage.addEventListener("load", function () {
 
   function animate() {
     // ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
-    ctx.globalAlpha = 0.5;
+    ctx.globalAlpha = 0.05;
     ctx.fillStyle = "rgba(0,0,0)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.globalAlpha = 0.1;
