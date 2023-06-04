@@ -13,7 +13,7 @@ myImage.addEventListener("load", function () {
   // console.log(pixels);
 
   let particlesArray = [];
-  const numberOfParticles = 5000;
+  const numberOfParticles = 4000;
 
   let mappedImage = [];
 
@@ -44,15 +44,33 @@ myImage.addEventListener("load", function () {
       this.x = Math.random() * canvas.width;
       this.y = 0;
       this.speed = 0;
-      this.velocity = Math.random() * 3.5; //
+      this.velocity = Math.random() * 0.4; //
       this.size = Math.random() * 1.5 + 1;
       this.position1 = Math.floor(this.y);
       this.position2 = Math.floor(this.x);
     }
+    // update() {
+    //   this.position1 = Math.floor(this.y);
+    //   this.position2 = Math.floor(this.x);
+    //   this.speed = mappedImage[this.position1][this.position2][0];
+    //   let movement = 2.5 - this.speed + this.velocity;
+
+    //   this.y += movement;
+    //   if (this.y >= canvas.height) {
+    //     this.y = 0;
+    //     this.x = Math.random() * canvas.width;
+    //   }
+    // }
     update() {
       this.position1 = Math.floor(this.y);
       this.position2 = Math.floor(this.x);
-      this.speed = mappedImage[this.position1][this.position2][0];
+
+      const minSpeed = 0.1; // Мінімальне значення швидкості
+      const maxSpeed = 3.5; // Максимальне значення швидкості
+
+      // Задаємо випадкову швидкість для кожної частинки
+      this.speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+
       let movement = 2.5 - this.speed + this.velocity;
 
       this.y += movement;
@@ -61,9 +79,21 @@ myImage.addEventListener("load", function () {
         this.x = Math.random() * canvas.width;
       }
     }
+    // draw() {
+    //   ctx.beginPath();
+    //   ctx.fillStyle = "red";
+    //   ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    //   ctx.fill();
+    // }
     draw() {
+      const pixelData = pixels.data;
+      const pixelIndex = (this.position1 * canvas.width + this.position2) * 4;
+      const red = pixelData[pixelIndex];
+      const green = pixelData[pixelIndex + 1];
+      const blue = pixelData[pixelIndex + 2];
+
       ctx.beginPath();
-      ctx.fillStyle = "red";
+      ctx.fillStyle = `rgb(${red}, ${green}, ${blue})`;
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.fill();
     }
